@@ -12,17 +12,16 @@ function intToRoman(number){
             resultString += reference[i+1];
             number -= reference[i];
         }else{
-            i -=2;
+            i -= 2;
         }
-
     }
     return resultString;
 }
-if (hours > 24 || minutes > 59){
+if (hours > 23 || minutes > 59 || hours < 0 || minutes < 0){
     console.log('Время указано не верно');
 } else{
-    var reference = [1,'I',4,'IV',5,'V',9,'IX',10,'X',40,'XL',50,'L'];
-    var resultString = intToRoman(hours)+ ':'+ intToRoman(minutes);
+    var reference = [1, 'I', 4, 'IV', 5, 'V', 9, 'IX', 10, 'X', 40, 'XL', 50, 'L'];
+    var resultString = intToRoman(hours)+ ':' + intToRoman(minutes);
     console.log(resultString);
     var asciiResult = '';
     var asciiDots =
@@ -67,7 +66,7 @@ if (hours > 24 || minutes > 59){
         '  | |   _    ',
         ' _| |__/ |   ',
         '|________|   '];
-    for (var j = 0; j < 6; j++){
+    for (var j = 0; j < asciiI.length; j++){
         asciiResult = '';
         for (var i = 0; i < resultString.length; i++) {
             switch (resultString[i]) {
