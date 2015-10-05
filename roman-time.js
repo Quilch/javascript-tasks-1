@@ -1,85 +1,28 @@
 'use strict';
 var hours = process.argv[2];
 var minutes = process.argv[3];
-if (hours > 23 || minutes > 59){
-    console.log('Время указано не верно');
-} else{
-    var romanHours = '';
-    var romanMinutes = '';
-    var firstDigit = hours / 10 - hours / 10 % 1;
-    var secondDigit = hours % 10;
-    switch (firstDigit) {
-        case 2:
-            romanHours = 'XX';
-            break;
-        case 1:
-            romanHours = 'X';
-            break;
-        default :
-            if (secondDigit == 0) {
-                romanHours = 'N';
-            }
-            break;
+function intToRoman(number){
+    if(number == 0){
+        return 'N';
     }
-    switch (secondDigit){
-        case 9:
-            romanHours += 'IX';
-            break;
-        case 4:
-            romanHours +='IV';
-            break;
-        default:
-            if (secondDigit >= 5){
-                romanHours +='V';
-                secondDigit -= 5;
-            }
-            while(secondDigit != 0){
-                romanHours +='I';
-                secondDigit--;
-            }
-            break;
-    }
-    firstDigit = minutes / 10 - minutes / 10 % 1;
-    secondDigit = minutes % 10;
-    switch (firstDigit){
-        case 5:
-            romanMinutes +='L';
-            break;
-        case 4:
-            romanMinutes +='XL';
-            break;
-        case 0:
-            if(secondDigit == 0){
-                romanMinutes +='N';
-            }
-            break;
-        default :
-            while(firstDigit != 0){
-                romanMinutes += 'X';
-                firstDigit--;
-            }
-            break;
+    var resultString = '';
+    var i = reference.length - 2;
+    while(number > 0){
+        if (number >= reference[i]){
+            resultString += reference[i+1];
+            number -= reference[i];
+        }else{
+            i -=2;
+        }
 
     }
-    switch (secondDigit){
-        case 9:
-            romanMinutes += 'IX';
-            break;
-        case 4:
-            romanMinutes +='IV';
-            break;
-        default:
-            if (secondDigit >= 5){
-                romanMinutes +='V';
-                secondDigit -= 5;
-            }
-            while(secondDigit != 0){
-                romanMinutes +='I';
-                secondDigit--;
-            }
-            break;
-    }
-    var resultString = romanHours + ':' + romanMinutes;
+    return resultString;
+}
+if (hours > 24 || minutes > 59){
+    console.log('Время указано не верно');
+} else{
+    var reference = [1,'I',4,'IV',5,'V',9,'IX',10,'X',40,'XL',50,'L'];
+    var resultString = intToRoman(hours)+ ':'+ intToRoman(minutes);
     console.log(resultString);
     var asciiResult = '';
     var asciiDots =
@@ -151,12 +94,3 @@ if (hours > 23 || minutes > 59){
         console.log(asciiResult);
     }
 }
-/*
- ____  ____ 123 _____    123 ____   ____ 123 _____ 123   123 ____  _____ 1
-|_  _||_  _|123|_   _|   123|_  _| |_  _|123|_   _|123 _ 123|_   \|_   _|
-  \ \  / /  123  | |     123  \ \   / /  123  | |  123(_)123  |   \ | |  1
-   > `' <   123  | |   _ 123   \ \ / /   123  | |  123 _ 123  | |\ \| |  1
- _/ /'`\ \_ 123 _| |__/ |123    \ ' /    123 _| |_ 123(_)123 _| |_\   |_ 1
-|____||____|123|________|123     \_/     123|_____|123   123|_____|\____|
-
- */
